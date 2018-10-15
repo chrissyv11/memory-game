@@ -49,9 +49,13 @@ function newGame(){
   moveCounter.innerText = moves;
   deck.innerHTML = cardHTML.join('');
 }
-
+/*Add function to show final score if game is over*/
+function gameOver(){
+  finalScore.classList.add('show');
+}
 var allCards = document.querySelectorAll('.card');
 var openCards = [];
+var matches = 0;
 var moves = 0;
 var moveCounter = document.querySelector('.moves');
 
@@ -76,17 +80,21 @@ allCards.forEach(function(card){
         openCards[1].classList.remove('open');
         openCards[1].classList.remove('show');
         openCards = [];
+        matches = matches + 2;
       } else {
       setTimeout(function(){
         openCards.forEach(function(card){
           card.classList.remove('open','show');
         });
-
         openCards = [];
       }, 1000);
     }
     moves += 1;
     moveCounter.innerText = moves;
+/*Condition to show when game is over*/
+    if (matches == 16){
+      gameOver();
+    }
   }
   }
   });
