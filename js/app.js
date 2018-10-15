@@ -1,9 +1,13 @@
 /*
  * Create a list that holds all of your cards
  */
-var cardlist = ["card0","card1","card2","card3","card4","card5",
-"card6","card7","card8","card9","card10","card11",
-"card12","card13","card14","card15"];
+var cardList = ['fa-diamond','fa-diamond','fa-paper-plane-o','fa-paper-plane-o',
+'fa-anchor','fa-anchor','fa-bolt','fa-bolt','fa-cube','fa-cube','fa-leaf','fa-leaf',
+'fa-bicycle','fa-bicycle','fa-bomb','fa-bomb'];
+
+function newCard(card) {
+  return '<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>';
+}
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -35,8 +39,23 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+function newGame(){
+  var deck = document.querySelector('.deck');
+    var cardHTML = shuffle(cardList).map(function(card){
+    return newCard(card);
+  });
+  moves = 0;
+  moveCounter.innerText = moves;
+  deck.innerHTML = cardHTML.join('');
+}
+
 var allCards = document.querySelectorAll('.card');
 var openCards = [];
+var moves = 0;
+var moveCounter = document.querySelector('.moves');
+
+newGame();
 
 allCards.forEach(function(card){
   card.addEventListener('click',function(e){
@@ -48,7 +67,16 @@ allCards.forEach(function(card){
     openCards.push(card);
     card.classList.add('open','show');
 
-    if (openCards.length >=2){
+    if (openCards.length ==2){
+      if (openCards[0].dataset.card == openCards[1].dataset.card){
+        openCards[0].classList.add('match');
+        openCards[0].classList.remove('open');
+        openCards[0].classList.remove('show');
+        openCards[1].classList.add('match');
+        openCards[1].classList.remove('open');
+        openCards[1].classList.remove('show');
+        openCards = [];
+      } else {
       setTimeout(function(){
         openCards.forEach(function(card){
           card.classList.remove('open','show');
@@ -57,6 +85,9 @@ allCards.forEach(function(card){
         openCards = [];
       }, 1000);
     }
+    moves += 1;
+    moveCounter.innerText = moves;
+  }
   }
   });
 });
