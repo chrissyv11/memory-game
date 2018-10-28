@@ -21,6 +21,10 @@ function newCard(card) {
 var modal = document.getElementById('modalBox');
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
+// Get the modal
+var clickyes = document.getElementById('playagain');
+// Get the modal
+var clickno = document.getElementById('quitGame');
 // Open modal function
 function gameOver(){
   modal.style.display = "block";
@@ -30,10 +34,17 @@ function gameOver(){
 span.onclick = function() {
     modal.style.display = "none";
 }
+clickno.onclick = function() {
+    modal.style.display = "none";
+}
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+    }
+clickyes.onclick = function() {
+      modal.style.display = "none";
+
     }
 }
 
@@ -152,5 +163,5 @@ newGame();
 
 function resetGame (){
   var reset = document.querySelector('.fa fa-repeat');
-  reset.addEventListener('click',newGame());
+  reset.addEventListener('click');
 }
