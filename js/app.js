@@ -2,6 +2,8 @@ var openCards = [];
 var matches = 0;
 var moves = 0;
 var moveCounter = document.querySelector('.moves');
+var matchCounter = document.querySelector('.matches');
+var starCount = 3;
 
 /*
 * Create a list that holds all of your cards
@@ -13,6 +15,54 @@ var cardList = ['fa-diamond','fa-diamond','fa-paper-plane-o','fa-paper-plane-o',
 function newCard(card) {
   return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
+
+/*Open modal box when game is over*/
+// Get the modal
+var modal = document.getElementById('modalBox');
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// Open modal function
+function gameOver(){
+  modal.style.display = "block";
+  stopTimer();
+}
+// When the user clicks on span x, close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+//Create timer
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+var timer = setInterval(setTime, 1000);
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
+//Stop timer
+function stopTimer() {
+    clearInterval(timer);
+}
+
 /*
 * Display the cards on the page
 *   - shuffle the list of cards using the provided "shuffle" method below
@@ -51,8 +101,11 @@ function newGame(){
     return newCard(card);
   });
   moves = 0;
+  matches = 0;
   moveCounter.innerText = moves;
+  matchCounter.innerText = matches;
   deck.innerHTML = cardHTML.join('');
+  setTime();
 
   var allCards = document.querySelectorAll('.card');
 
@@ -85,6 +138,7 @@ function newGame(){
           }
           moves += 1;
           moveCounter.innerText = moves;
+          matchCounter.innerText = matches;
           /*Condition to show when game is over*/
           if (matches == 16){
             gameOver();
@@ -94,9 +148,9 @@ function newGame(){
     });
   });
 }
-/*Add function to show final score if game is over*/
-function gameOver(){
-  finalScore.classList.add('show');
-}
-
 newGame();
+
+function resetGame (){
+  var reset = document.querySelector('.fa fa-repeat');
+  reset.addEventListener('click',newGame());
+}

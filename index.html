@@ -23,14 +23,30 @@
         	</ul>
 
         	<span class="moves">3</span> Moves
-
-    /*Add final score*/
-          <span class="finalscore">"Game Over! The final score is " + moves</span>
+          <span class="matches">3</span> Matches
+          <label id="minutes">00</label>:<label id="seconds">00</label>
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>
         	</div>
         </section>
+
+        /* Modal Box */
+        <div id="modalBox" class="modal">
+
+          /* Modal content */
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>"Congratualations! You have won.\n
+            Game duration was " + gameTimer + "seconds.\n
+            Star count is " + starCount + "."\n
+
+              "Do you want to play again?"
+          </p>
+          <button id="playagain">Yes</button>
+          <button id="quitgame">No</button>
+          </div>
+        </div>
 
         <ul class="deck"></ul>
     </div>
