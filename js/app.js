@@ -34,18 +34,17 @@ function gameOver(){
 span.onclick = function() {
     modal.style.display = "none";
 }
-clickno.onclick = function() {
-    modal.style.display = "none";
-}
+/*clickno.onclick = function() {
+    //modal.style.display = "none";
+}*/
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
-clickyes.onclick = function() {
-      modal.style.display = "none";
-
-    }
+/*clickyes.onclick = function() {
+      //modal.style.display = "none";
+    }*/
 }
 
 //Create timer
@@ -161,7 +160,7 @@ function newGame(){
 }
 newGame();
 
-function resetGame (){
-  var reset = document.querySelector('.fa fa-repeat');
-  reset.addEventListener('click');
-}
+//function resetGame (){
+  //var reset = document.querySelector('.fa fa-repeat');
+  //reset.addEventListener('click');
+//}
