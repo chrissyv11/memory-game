@@ -160,6 +160,15 @@ function newGame(){
 }
 newGame();
 
+//Reduce number of stars if move count reaches certain level
+/*
+if (moves >= 6 && moves < 10) {
+  starCount = 2;
+} elseif (moves >= 10){
+  starCount = 1;
+}
+//Create function to reset game if button is pressed
+*/
 //function resetGame (){
   //var reset = document.querySelector('.fa fa-repeat');
   //reset.addEventListener('click');
