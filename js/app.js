@@ -3,7 +3,13 @@ var matches = 0;
 var moves = 0;
 var moveCounter = document.querySelector('.moves');
 var matchCounter = document.querySelector('.matches');
+var starContainer = document.querySelector('.stars');
 var starCount = 3;
+
+// State for timer
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
 
 /*
 * Create a list that holds all of your cards
@@ -24,19 +30,34 @@ var span = document.getElementsByClassName("close")[0];
 // Get the modal
 var clickyes = document.getElementById('playagain');
 // Get the modal
-var clickno = document.getElementById('quitGame');
+var clickno = document.getElementById('quitgame');
 // Open modal function
 function gameOver(){
   modal.style.display = "block";
   stopTimer();
+
+  document.querySelector("#congrats-text").innerHTML = `
+    <p>Congratualations! You have won.</p>
+    <p>Game duration was ${minutesLabel.innerText} minutes and ${secondsLabel.innerText} seconds.</p>
+    <p>Star count is ${starCount}.</p>
+    <p>Do you want to play again?</p>
+  `;
 }
 // When the user clicks on span x, close the modal
 span.onclick = function() {
     modal.style.display = "none";
 }
-/*clickno.onclick = function() {
-    //modal.style.display = "none";
-}*/
+
+clickno.addEventListener('click', function() {
+  modal.style.display = "none";
+});
+
+clickyes.addEventListener('click', function() {
+  newGame();
+
+  modal.style.display = "none";
+});
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
@@ -48,9 +69,6 @@ window.onclick = function(event) {
 }
 
 //Create timer
-var minutesLabel = document.getElementById("minutes");
-var secondsLabel = document.getElementById("seconds");
-var totalSeconds = 0;
 var timer = setInterval(setTime, 1000);
 
 function setTime() {
@@ -105,7 +123,19 @@ function shuffle(array) {
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
 
+function showStars(numberOfStars) {
+  var starItems = "";
+
+  for (var i = 0; i < numberOfStars; i++) {
+    starItems += "<li><i class='fa fa-star'></i></li>";
+  }
+
+  return starItems;
+}
+
 function newGame(){
+  totalSeconds = 0;
+
   var deck = document.querySelector('.deck');
   var cardHTML = shuffle(cardList).map(function(card){
     return newCard(card);
@@ -116,6 +146,9 @@ function newGame(){
   matchCounter.innerText = matches;
   deck.innerHTML = cardHTML.join('');
   setTime();
+
+  starCount = 3;
+  starContainer.innerHTML = showStars(starCount);
 
   var allCards = document.querySelectorAll('.card');
 
@@ -146,11 +179,23 @@ function newGame(){
               openCards = [];
             }, 1000);
           }
+
+          // At this point, we have made a valid move
           moves += 1;
           moveCounter.innerText = moves;
           matchCounter.innerText = matches;
+
+          //Reduce number of stars if move count reaches certain level. Determine how to remove star
+          if (moves >= 6 && moves < 10) {
+            starCount = 2;
+          } else if (moves >= 10){
+            starCount = 1;
+          }
+
+          starContainer.innerHTML = showStars(starCount);
+
           /*Condition to show when game is over*/
-          if (matches == 16){
+          if (matches === 16){
             gameOver();
           }
         }
@@ -158,18 +203,9 @@ function newGame(){
     });
   });
 }
+
 newGame();
 
-//Reduce number of stars if move count reaches certain level
-/*
-if (moves >= 6 && moves < 10) {
-  starCount = 2;
-} elseif (moves >= 10){
-  starCount = 1;
-}
 //Create function to reset game if button is pressed
-*/
-//function resetGame (){
-  //var reset = document.querySelector('.fa fa-repeat');
-  //reset.addEventListener('click');
-//}
+var reset = document.querySelector('.restart');
+reset.addEventListener('click', newGame);

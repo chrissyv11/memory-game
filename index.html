@@ -16,14 +16,10 @@
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+        	<ul class="stars"></ul>
 
-        	<span class="moves">3</span> Moves
-          <span class="matches">3</span> Matches
+        	<span class="moves">0</span> Moves
+          <span class="matches">0</span> Matches
           <label id="minutes">00</label>:<label id="seconds">00</label>
 
             <div class="restart">
@@ -37,10 +33,7 @@
           <!--Modal Content-->
           <div class="modal-content">
             <span class="close">&times;</span>
-            <p>"Congratualations! You have won."</p>
-            <p>"Game duration was " + #minutesLabel + "minutes and " + #secondsLabel + "seconds."</p>
-            <p>"Star count is " + starCount + "."</p>
-            <p>"Do you want to play again?"</p>
+            <div id="congrats-text"></div>
           <button id="playagain">Yes</button>
           <button id="quitgame">No</button>
           </div>
